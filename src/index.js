@@ -67,14 +67,50 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  // const pizzas = [];
+  const numPizzas = pizzas.length;
   return (
-    <div className="menu">
+    <main className="menu">
       <h2>Our menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
-    </div>
+
+      {numPizzas > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : <p>We're still working on the menu.</p>}
+      {/* <Pizza
+        name="Pizza Spinaci"
+        ingredients="Tomato, mozarella, ham, aragula, and burrata cheese"
+        photoName="pizzas/spinaci.jpg"
+        price={10}
+      />
+
+
+      <Pizza 
+        name='Pizza Funghi' 
+        ingredients='Tomato, mushrooms' 
+        price={12} 
+        photoName='pizzas/funghi.jpg' 
+      /> */}
+    </main>
+  );
+}
+
+function Pizza(props) {
+  console.log(props);
+
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{[props.pizzaObj.ingredients]}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
   );
 }
 
@@ -86,21 +122,28 @@ function Footer() {
   console.log(isOpen);
   // if (hour >= openHour && hour <= closeHour) alert("We're currently open");  else alert("Sorry we're closed")
 
+  if (!isOpen) return (
+    <p className="order">
+      We're happy to welcome you between {openHour}:00 and {closeHour}:00.
+    </p>
+  );
+
   return (
-    <footer className="footer">{new Date().toLocaleTimeString()}. We're currently open</footer>
+    <footer className="footer">
+      {isOpen ? (
+        <div className="order">
+          <p>Open until {closeHour}:00</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p className="order">
+          We're happy to welcome you between {openHour}:00 and {closeHour}:00.
+        </p>
+      )}
+    </footer>
   );
 
   // return React.createElement('footer', null, "We're currently open!")
-}
-
-function Pizza() {
-  return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="Pizza spinaci" />
-      <h3>Pizza Spinaci</h3>
-      <p>Tomato, mozarella, ham, aragula, and burrata cheese</p>
-    </div>
-  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

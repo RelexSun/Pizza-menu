@@ -153,6 +153,9 @@ body {
 
 .footer {
   font-size: 1.4rem;
+  /* display: flex;
+  justify-content: center;*/
+  margin: 5em;
 }
 
 .order {
